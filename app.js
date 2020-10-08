@@ -13,13 +13,19 @@ server.listen(3000);
 console.log('Server Start!');
 
 function getFromClient(request, response){
-    var url_parts = url.parse(request.url);
+    var url_parts = url.parse(request.url, true);
     switch (url_parts.pathname){
 
         case '/':
+
+            var content = "これは Index のページです。"
+            var query = url_parts.query;
+            if(query.msg != undefined){
+                content += 'あたなは、「' + query.msg + '」と送りました。'; 
+            }
             var content = ejs.render(index_page, {
-                title : "Index ページ",
-                content : "これはテンプレを使ってプログラムから値を参照しています"
+                title : "Index",
+                content : content,
             });
             response.writeHead(200, { 'Content-Type' : 'text/html' });
             response.write(content);
@@ -37,10 +43,10 @@ function getFromClient(request, response){
             break;
 
         default:
-            response.writeHead(200, { 'Content-Type' : 'text/html' });
+            response.writeHead(200, { 'Content-Type' : 'text/plain' });
             response.end('no page...');
             break;
-
+            
     }
 }
     
