@@ -13,7 +13,14 @@
     </header>
     <div role="main">
         <p><%=content %></p>
-        <p><a href="/other">Other へ移動する &gt;&gt;</a></p>
+        <table class="table">
+            <% for(var key in data){ %>
+            <tr>
+                <th><%= key %></th>
+                <th><%= data[key] %></td>
+            </tr>
+            <% } %>
+        </table>
     </div>
 </body>
 
